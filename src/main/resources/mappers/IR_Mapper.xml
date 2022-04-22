@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace="com.greenrecipe.main.service.dao.IR_DAO">
+
+
+
+<resultMap type="com.greenrecipe.main.vo.BuyerVO" id="BuyerMap">
+	<id property="buyer_num" column="buyer_num" />
+	<id property="buyer_id" column="buyer_id" />
+	<id property="buyer_email" column="buyer_email" />
+	<id property="buyer_password" column="buyer_password" />
+	<id property="buyer_name" column="buyer_name" />
+	<id property="buyer_code" column="buyer_code" />
+	<id property="buyer_addr" column="buyer_addr" />
+	<id property="buyer_phone" column="buyer_phone" />
+	<id property="buyer_grade" column="buyer_grade" />
+	<id property="buyer_hash" column="buyer_hash" />
+	<id property="buyer_point" column="buyer_point" />
+	<id property="buyer_couponNum" column="buyer_couponNum" />
+	<id property="buyer_payment" column="buyer_payment" /> 
+</resultMap>
+
+
+<resultMap type="com.greenrecipe.main.vo.ItemVO" id="ItemMap">
+	<id property="item_num" column="item_num" />
+	<id property="item_name" column="item_name" />
+	<id property="item_image" column="item_image" />
+	<id property="item_detailImage" column="item_detailImage" />
+	<id property="item_price" column="item_price" />
+	<id property="item_per" column="item_per" />
+	<id property="item_stock" column="item_stock" />
+	<id property="item_cateNum" column="item_cateNum" />
+	<id property="item_date" column="item_date" />
+	<id property="item_reco" column="item_reco" />
+	<id property="item_selled" column="item_selled" />
+	<id property="item_hash" column="item_hash" />
+	<id property="item_recipeNum" column="item_recipeNum" />
+</resultMap>
+
+
+<resultMap type="com.greenrecipe.main.vo.RecipeVO" id="RecipeMap">
+	<id property="recipe_num" column="recipe_num" />
+	<id property="recipe_name" column="recipe_name" />
+	<id property="recipe_image" column="recipe_image" />
+	<id property="recipe_detailImage" column="recipe_detailImage" />
+	<id property="recipe_itemNum" column="recipe_itemNum" />
+	<id property="recipe_material" column="recipe_material" />
+	<id property="recipe_reco" column="recipe_reco" />
+	<id property="recipe_price" column="recipe_price" />
+</resultMap>
+
+
+<resultMap type="com.greenrecipe.main.vo.CartVO" id="CartMap">
+	<id property="cart_id" column="cart_id" />
+	<id property="cart_buyerNum" column="cart_buyerNum" />
+	<id property="cart_itemNum" column="cart_itemNum" />
+	<id property="cart_count" column="cart_count" />
+	<id property="cart_price" column="cart_price" />
+
+</resultMap>
+
+<resultMap type="com.greenrecipe.main.vo.ManagerVO" id="ManagerMap">
+	<id property="manager_num" column="manager_num" />
+	<id property="manager_id" column="manager_id" />
+	<id property="manager_password" column="manager_password" />
+	<id property="manager_code" column="manager_code" />
+</resultMap>
+
+
+<resultMap type="com.greenrecipe.main.vo.HelpVO" id="HelpMap">
+	<id property="help_num" column="help_num" />
+	<id property="help_buyerId" column="help_buyerNum" />
+	<id property="help_title" column="help_title" />
+	<id property="help_content" column="help_content" />
+	<id property="help_date" column="help_date" />
+</resultMap>
+
+
+
+<resultMap type="com.greenrecipe.main.vo.IR_VO" id="ItemRecipeMap">
+	<collection property="buyerVO" resultMap="BuyerMap" />
+	<collection property="itemVO" resultMap="ItemMap" />
+	<collection property="recipeVO" resultMap="RecipeMap" />
+	<collection property="cartVO" resultMap="CartMap" />
+	<collection property="managerVO" resultMap="ManagerMap" />
+	<collection property="helpVO" resultMap="HelpMap" />
+</resultMap>
+
+
+
+
+
+<!-- ### -->
+	<select id="IR_all" resultMap="ItemRecipeMap">
+		select *
+		from item i, recipe r
+		where i.item_recipeNum = r.recipe_num
+	</select>
+
+
+<!-- ### -->
+	<select id="IR_like" resultMap="ItemRecipeMap">
+		select *
+		from item i, recipe r
+		where i.item_recipeNum = r.recipe_num
+		and
+		i.item_recipeNum=#{itemVO.item_recipeNum}
+	</select> 
+
+
+  <!-- ### -->
+	<select id="IR_recipe" resultMap="ItemRecipeMap">
+		select *
+		from recipe
+		where recipe_itemNum like '%' || #{itemVO.item_name, jdbcType=VARCHAR} || '%' 
+	</select>
+	
+	<!-- ### -->
+	<select id="recipe_detail" resultMap="ItemRecipeMap">
+		select *
+		from recipe
+		where recipe_num = #{recipeVO.recipe_num}
+	</select>
+	
+	
+	
+
+
+<!--   서브쿼리로 넣기
+	WITH TMP AS 
+	(SELECT recipe_itemNum FROM recipe where recipe_itemNum like '%' || #{recipeVO.recipe_itemNum} || '%' )
+	SELECT distinct
+		REGEXP_SUBSTR(TMP.recipe_itemNum, '[^,]+', 1, LEVEL) CODE
+	FROM recipe, TMP
+	CONNECT BY	REGEXP_SUBSTR(TMP.recipe_itemNum, '[^,]+', 1, LEVEL) IS NOT NULL;
+-->
+
+
+<!-- ### -->
+	<select id="cart_itemNum" resultMap="ItemRecipeMap">
+		select *
+		from item i, cart c
+		where i.item_num = c.cart_itemNum
+		and i.item_num =#{itemVO.item_num}
+	</select>
+
+
+
+<!-- ### -->
+	<select id="cart_item" resultMap="ItemRecipeMap">
+		select *
+		from item i, cart c, buyer b
+		where i.item_num = c.cart_itemNum 
+		and c.cart_buyerNum = b.buyer_num
+		and b.buyer_num =#{buyerVO.buyer_num}
+	</select>
+
+
+
+<!-- ### -->
+	<select id="cart_item2" resultMap="ItemRecipeMap">
+        select *
+		from item i, cart c, buyer b, recipe r
+		where c.cart_buyerNum = b.buyer_num
+		and i.item_num = c.cart_itemNum
+        and i.item_recipenum = r.recipe_num
+        and b.buyer_num =#{buyerVO.buyer_num}
+	</select>
+
+
+
+
+
+<!-- ### -->
+	<delete id="IR_deleteCart">
+		delete from cart
+		where cart_id = #{cartVO.cart_id}
+    </delete>
+	
+
+
+
+
+
+
+ 
+
+
+
+
+			<!--  Manager -->
+
+
+
+
+ 			<!--  Manager -->
+ 
+</mapper>
+
+

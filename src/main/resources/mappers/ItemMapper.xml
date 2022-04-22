@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace="com.greenrecipe.main.service.dao.ItemDAO">
+
+
+
+
+
+
+
+
+	<!-- ### -->
+	<select id="getAllItem" resultType="com.greenrecipe.main.vo.ItemVO">
+	  SELECT *
+	  FROM item
+	</select>
+	
+	
+	
+	<!-- ### -->
+	<select id="getIteminfo" resultType="com.greenrecipe.main.vo.ItemVO">
+		SELECT item_num, item_name, item_image, item_detailImage, 
+		item_price, item_per, item_stock, item_cateNum, item_date, 
+		item_reco, item_selled, item_hash, item_recipeNum
+		FROM item
+		where item_num= #{item_num}
+	</select>
+	
+	
+	<!-- ### -->
+	<select id="Select_item" resultType="com.greenrecipe.main.vo.ItemVO" >
+		select item_num, item_name, item_image, item_detailImage, 
+		item_price, item_per, item_stock, item_cateNum, item_date, 
+		item_reco, item_selled, item_hash, item_recipeNum
+		from item
+		where item_recipeNum=#{item_recipeNum}
+	</select>
+
+	<!-- ### -->
+	<select id="Select_item2" resultType="com.greenrecipe.main.vo.ItemVO" >
+		select item_num, item_name, item_image, item_detailImage, 
+		item_price, item_per, item_stock, item_cateNum, item_date, 
+		item_reco, item_selled, item_hash, item_recipeNum
+		from item
+		where item_recipeNum=#{item_recipeNum}
+	</select>
+	
+	
+		<!-- ### -->
+	<select id="itemInfo" resultType="com.greenrecipe.main.vo.ItemVO">
+		SELECT *
+		FROM item
+		where item_name= #{item_name}
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- HG -->
+	
+	
+	<select id="itemLikeInfo"
+		resultType="com.greenrecipe.main.vo.ItemVO">
+		select * from item where
+		item_num = #{itemLikeNum}
+	</select>
+	
+	
+	<select id="itemBestList"
+		resultType="com.greenrecipe.main.vo.ItemVO">
+		select * from item order
+		by item_selled desc
+	</select>
+
+	<select id="itemNewList"
+		resultType="com.greenrecipe.main.vo.ItemVO">
+		select * from item order by item_date desc
+	</select>
+
+
+	<select id="itemSaleList"
+		resultType="com.greenrecipe.main.vo.ItemVO">
+		select * from item order by item_per desc
+	</select>
+
+	<select id="itemSearchList"
+		resultType="com.greenrecipe.main.vo.ItemVO">
+		SELECT * FROM item WHERE item_name LIKE  '%'||#{keyword}||'%'
+	</select>
+	
+		<select id="itemCateList"
+		resultType="com.greenrecipe.main.vo.ItemVO">
+		select * from item where item_cateNum = #{cateNum}
+	</select>
+	
+	
+	<!--  cate_detail로 조건
+	<select id="itemCateList"
+		resultType="com.greenrecipe.main.vo.ItemVO">
+		select * from item where item_cateNum in (select cate_detailNum from cate_detail where  cate_num = #{cateNum})
+	</select>
+	
+	-->
+	<!-- HG -->
+	
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	<!-- JG -->
+	
+ 
+ 
+ 	<select id="getItemInfo" resultType="com.greenrecipe.main.vo.ItemVO" >
+		select * from item where item_num = #{item_num}
+	</select>
+	
+	<select id="recipeItem" resultType="com.greenrecipe.main.vo.ItemVO" >
+		select * from item where item_recipeNum = #{recipe_num}
+	</select>
+ 
+ 
+ 	<update id = "updateItemStockSelled">
+	update item set item_stock = #{item_stock}, item_selled = #{item_selled} where item_num = #{item_num}
+	</update>
+ 
+ 
+ 	<!-- JG -->
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+</mapper>

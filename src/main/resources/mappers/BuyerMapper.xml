@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace="com.greenrecipe.main.service.dao.BuyerDAO">
+
+
+	<!-- ### -->
+	<select id="getAllBuyer" resultType="com.greenrecipe.main.vo.BuyerVO">
+	  SELECT *
+	  FROM buyer
+	</select>
+	
+	
+	<!-- ### -->
+	<select id="getBuyerNum" resultType="com.greenrecipe.main.vo.BuyerVO">
+		select *
+		from buyer
+		where buyer_num = #{buyer_num}
+	</select>
+	
+	
+  <!-- ### -->
+	<select id="loginCheck" resultType="com.greenrecipe.main.vo.BuyerVO" >
+		select *
+		from buyer
+		where buyer_id=#{buyer_id} and buyer_password=#{buyer_password}
+	</select>
+	
+	
+	<!-- ### -->
+	<select id="getBuyerinfoId" resultType="com.greenrecipe.main.vo.BuyerVO">
+		select *
+		from buyer
+		where buyer_id = #{buyer_id}
+	</select>
+	
+	
+	<!-- 등급, 결제금액, 소유한 포인트 -->
+	<update id = "updateBuyerPayComplete">
+		update buyer 
+		set buyer_grade = #{buyer_grade}, buyer_payment = #{buyer_payment}, buyer_point = #{buyer_point}
+		where buyer_num = #{buyer_num}
+	</update>
+	
+	
+	<!-- ### -->
+	<insert id="insertBuyer">
+		insert into buyer (buyer_id, buyer_email, buyer_password, buyer_name,
+		buyer_addr, buyer_phone, buyer_hash) values(
+		#{buyer_id}, #{buyer_email}, #{buyer_password},
+		 #{buyer_name}, #{buyer_addr}, #{buyer_phone}, #{buyer_hash}
+		 )
+	</insert>
+
+
+	<!-- ### -->
+    <update id="updateBuyer">
+       UPDATE buyer
+       SET buyer_name=#{buyer_name}, buyer_password=#{buyer_password},
+       buyer_email=#{buyer_email}, buyer_addr=#{buyer_addr}
+       WHERE buyer_num = #{buyer_num}
+    </update>
+
+	
+	<!-- ### -->
+	<delete id="deleteBuyer">
+		delete from buyer
+		where buyer_id = #{buyer_id}
+    </delete>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- HG -->
+	
+	
+	<select id="getBuyerInfo" resultType="com.greenrecipe.main.vo.BuyerVO" >
+		select * from buyer where buyer_num=#{buyer_num}
+	</select>
+	
+	
+					<!--   HG    -->
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+					<!--   YS   -->
+	
+		<!-- 아이디 중복 체크 -->
+	<select id="idCheck" parameterType="String" resultType="int">
+        SELECT COUNT(*) FROM buyer WHERE buyer_id= #{buyer_id}
+    </select>
+    
+    <!-- 코드 체크 (구현 안해봄) -->
+	<select id="codeCheck" parameterType="String" resultType="int">
+        SELECT COUNT(*) FROM buyer WHERE buyer_code= #{buyer_code}
+    </select>
+	
+	
+	
+	
+					<!--   YS   -->
+	
+ 
+</mapper>

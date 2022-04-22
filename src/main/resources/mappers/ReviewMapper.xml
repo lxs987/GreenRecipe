@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace="com.greenrecipe.main.service.dao.ReviewDAO">
+
+
+	<select id="reviewList" resultType="com.greenrecipe.main.vo.ReviewVO" >
+		select * from review where review_buyerNum = #{buyerNum}
+	</select>
+	
+	<delete id="deleteReview">
+		delete from review where review_num = #{reviewNum}
+	</delete>
+
+		 <insert id="insertReview">
+		insert into review values (REVIEW_SEQ.nextval,#{review_buyerNum},#{review_itemNum},#{review_content},#{review_image},#{review_star},0,sysdate)
+		
+		</insert>
+
+	
+	
+	
+	
+	<!-- JG -->
+	
+	<select id="itemReviewList" resultType="com.greenrecipe.main.vo.ReviewVO" >
+		select * from review where review_itemNum = #{itemNum}
+	</select>
+	
+	<select id="itemReviewNumber" resultType="int" >
+		SELECT COUNT(*) FROM review where review_itemNum = #{item_num}
+	</select>
+	
+	
+	<!-- JG -->
+
+
+
+
+</mapper>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace="com.greenrecipe.main.service.dao.PayDAO">
+
+
+
+	<select id="payList" resultType="com.greenrecipe.main.vo.PayVO" >
+		select * from pay where pay_buyerNum=#{buyer_num}
+	</select>
+	
+
+	<insert id="insertPay">
+	
+		insert into pay(pay_buyerNum, pay_itemNum, pay_itemName, pay_deliveryNum, pay_price, pay_date)
+		values(#{pay_buyerNum}, #{pay_itemNum}, #{pay_itemName}, #{pay_deliveryNum}, #{pay_price}, sysdate)
+	
+	</insert>
+
+	<select id="getPayInfo" resultType="com.greenrecipe.main.vo.PayVO" >
+		SELECT *
+		FROM pay
+		WHERE pay_deliveryNum = #{pay_deliveryNum}
+	</select>
+
+
+
+
+
+
+	<select id="payAll" resultType="com.greenrecipe.main.vo.PayVO" >
+		select * from pay
+	</select>
+
+
+
+	<!-- CS test-->
+	<insert id="insert_Pay">
+	
+	insert into pay(pay_buyerNum, pay_cartNum, pay_itemNum, pay_itemName, pay_price, pay_date)
+	values(
+	#{pay_buyerNum}, #{pay_cartNum}, #{pay_itemNum},#{pay_itemName}, #{pay_price}, sysdate
+	 )
+
+	</insert>
+
+</mapper>

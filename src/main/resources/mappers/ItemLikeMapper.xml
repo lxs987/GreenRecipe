@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace="com.greenrecipe.main.service.dao.ItemLikeDAO">
+
+
+
+	<select id="itemLikeNum" resultType="com.greenrecipe.main.vo.ItemLikeVO" >
+		select * from itemLike where itemLike_sepe = 0 and itemLike_buyerNum = #{itemLike_buyerNum}
+	</select>
+	
+	<delete id="deleteItemLike">
+		delete from itemLike where itemLike_sepe = 0 and itemLike_itemNum=#{itemLikeNum}
+	</delete>
+	
+	<delete id="deleteRecipeLike">
+		delete from itemLike where itemLike_sepe = 1 and itemLike_itemNum=#{itemLikeNum}
+	</delete>
+
+	<select id="recipeLikeNum" resultType="com.greenrecipe.main.vo.ItemLikeVO" >
+		select * from itemLike where itemLike_sepe = 1 and itemLike_buyerNum = #{itemLike_buyerNum}
+	</select>
+	
+	
+	
+		<insert id="likeButton" parameterType="com.greenrecipe.main.vo.ItemLikeVO">
+	
+	insert into itemLike(itemLike_sepe, itemLike_buyerNum, itemLike_itemNum) 
+	values(#{itemLike_sepe}, #{itemLike_buyerNum}, #{itemLike_itemNum})
+	
+    </insert>
+	
+	
+	
+</mapper>

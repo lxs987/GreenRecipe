@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace="com.greenrecipe.main.service.dao.InquiryDAO">
+
+
+
+	<select id="inquiryList" resultType="com.greenrecipe.main.vo.InquiryVO" >
+		select * from inquiry where inquiry_buyerNum=#{buyer_num}
+	</select>
+	
+	
+	<select id="seller_inquiry" resultType="com.greenrecipe.main.vo.InquiryVO" >
+		select * from inquiry where inquiry_sellerId=#{sellerId}
+	</select>
+	
+	<select id="seller_answer" resultType="com.greenrecipe.main.vo.InquiryVO" >
+		select * from inquiry where inquiry_num=#{inquiry_num}
+	</select>
+	
+
+	<update id="updateAnswer">
+       UPDATE inquiry
+       SET  inquiry_answerYN=#{inquiry_answerYN} , inquiry_answerContent=#{inquiry_answerContent}
+       WHERE inquiry_num = #{inquiry_num}
+    </update>
+
+
+
+</mapper>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace="com.greenrecipe.main.service.dao.HelpDAO">
+
+	<select id="helpList" resultType="com.greenrecipe.main.vo.HelpVO">
+		select B.* from(
+		select rownum rn, A.* from(
+		select * from help order by help_num desc)A)B
+		where rn between #{s} and #{e}
+	</select>
+
+	<!-- select * from help order by help_num desc -->
+	
+	<select id="helpBuyer" resultType="Integer">
+		select * from help where help_buyerId=#{help_buyerId}
+	</select>
+	
+	
+	<select id="helpCount" resultType="Integer">
+		select count(*) from help
+	</select>
+
+	<insert id="insertHelp">
+		insert into help(help_num, help_title, help_content, help_date)
+		values(help_seq.nextval, #{help_title}, #{help_content}, sysdate)
+	</insert>
+	<!-- 일단 아이디 컬럼 제외하나 후에 넣을 것임 #{help_buyerId} -->
+	
+	<update id="updateHelp">
+       UPDATE help
+       SET help_title=#{help_title}, help_content=#{help_content}
+       WHERE help_num = #{help_num}
+    </update>
+	
+	<delete id="deleteHelp">
+		delete from help
+		where help_num = #{help_num}
+    </delete>
+	
+	<select id="helpContentView" resultType="com.greenrecipe.main.vo.HelpVO">
+		select * from help where help_num = #{help_num}
+	</select>
+	
+	<insert id="insertHelpReply">
+		insert into help_reply(reply_title, reply_content, write_group)
+		values(#{reply_title}, #{reply_content}, #{write_group})
+	</insert>
+
+	<select id="replyList" resultType="com.greenrecipe.main.vo.ReplyVO">
+		select * from help_reply
+		where write_group=#{write_group}
+		order by write_date desc
+	</select>
+	
+	
+	
+	
+	
+	<insert id="insertHelp2">
+		insert into help(help_num, help_buyerId, help_title, help_content, help_date)
+		values(help_seq.nextval, #{help_buyerId}, #{help_title}, #{help_content}, sysdate)
+	</insert>
+	
+
+	<delete id="deleteHelp2">
+		delete from help
+		where help_num = #{help_num}
+    </delete>
+    
+   	<update id="updateHelp2">
+       UPDATE help
+       SET help_title=#{help_title}, help_content=#{help_content}
+       WHERE help_num = #{help_num}
+    </update>
+    
+    <select id="helpBuyer2" resultType="com.greenrecipe.main.vo.HelpVO">
+		select * from help where help_num=#{help_num} and help_buyerId=#{help_buyerId}
+	</select>
+	
+	<update id="updateHelp3">
+       UPDATE help
+       SET help_title=#{help_title}, help_content=#{help_content}
+       WHERE help_num = #{help_num} and help_buyerId=#{help_buyerId}
+    </update>
+	
+</mapper>

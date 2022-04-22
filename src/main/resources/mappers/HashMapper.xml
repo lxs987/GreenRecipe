@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.greenrecipe.main.service.dao.HashDAO">
+	<select id="getHashInfo" resultType="com.greenrecipe.main.vo.HashVO" >
+		select * from hash where hash_num = #{hash_num}
+	</select>
+</mapper>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace="com.greenrecipe.main.service.dao.CartDAO">
+
+
+
+
+
+
+		<!-- CS -->
+
+	<select id="cart_get" resultType="com.greenrecipe.main.vo.CartVO">
+		select *
+		from cart
+		where cart_buyerNum =#{cart_buyerNum}
+	</select>
+
+
+
+	<insert id="insertCart">
+	
+	insert into cart(cart_buyerNum, cart_itemNum, cart_count, cart_price) values(
+	 #{cart_buyerNum}, #{cart_itemNum}, #{cart_count}, #{cart_price}
+	 )
+
+	</insert>
+	
+
+
+	<delete id="deleteCart">
+		delete from cart
+		where cart_id = #{cart_id}
+    </delete>
+    
+	<!-- CS -->
+	
+	
+	
+	
+	
+		<!-- JG -->
+		
+	<insert id="itemCart" parameterType="com.greenrecipe.main.vo.CartVO">
+	
+	insert into cart(cart_buyerNum, cart_itemNum, cart_count, cart_price) 
+	values(#{cart_buyerNum}, #{cart_itemNum}, #{cart_count}, #{cart_price})
+    
+    </insert>
+    
+    
+        <select id="getCartinfo" resultType="com.greenrecipe.main.vo.CartVO">
+		SELECT *
+		FROM cart
+		where cart_id = #{cart_id}
+	</select>
+	
+	
+	
+		<!-- JG -->
+	
+	
+	
+ 
+</mapper>

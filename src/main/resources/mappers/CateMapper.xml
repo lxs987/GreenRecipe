@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace="com.greenrecipe.main.service.dao.CateDAO">
+
+
+
+	<select id="cateInfo" resultType="com.greenrecipe.main.vo.CateVO" >
+		select * from cate where cate_num =#{cateNum}
+	</select>
+	
+	
+	<select id="getAllCate" resultType="com.greenrecipe.main.vo.CateVO" >
+		select * from cate
+	</select>
+	
+	
+
+</mapper>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace="com.greenrecipe.main.service.dao.RecipeDAO">
+
+
+
+
+
+	<!-- ### -->
+	<select id="getAllRecipe" resultType="com.greenrecipe.main.vo.RecipeVO">
+	  SELECT *
+	  FROM recipe
+	</select>
+	
+	
+
+	 
+	 
+	 <!-- ### --><!--  서비스를 ArrayList로 만듬 -->
+	<select id="selectRecipe" resultType="com.greenrecipe.main.vo.RecipeVO">
+		select *
+		from recipe
+		where recipe_num=#{recipe_num}
+	</select>
+	
+	
+	
+	<!-- ### --><!--  서비스를 VO로 만듬 -->
+	<select id="selectRecipe2" resultType="com.greenrecipe.main.vo.RecipeVO">
+		select *
+		from recipe
+		where recipe_num=#{recipe_num, jdbcType=NUMERIC}
+	</select>
+	
+	
+	<!-- ### -->
+	<select id="IR_recipe2" resultType="com.greenrecipe.main.vo.RecipeVO">
+		select  *
+		from recipe
+		where recipe_itemNum like '%' || #{itemVO.item_name, jdbcType=VARCHAR} || '%' 
+	</select>
+	
+	
+		<!-- ### -->
+	<select id="combi_recipe" resultType="com.greenrecipe.main.vo.RecipeVO">
+		select distinct *
+		from recipe
+		where recipe_itemNum like '%' || #{item_name} || '%' 
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- HG -->
+	
+	<select id="RecipeLikeInfo" resultType="com.greenrecipe.main.vo.RecipeVO" >
+		select * from recipe where recipe_num = #{itemLikeNum}
+	</select>
+	
+	
+	<!-- HG -->
+	
+	
+	<select id="getRecipeInfo" resultType="com.greenrecipe.main.vo.RecipeVO" >
+		select * from recipe where recipe_num = #{recipe_num}
+	</select>
+	
+	
+ 
+</mapper>
